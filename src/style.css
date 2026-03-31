@@ -1,0 +1,23 @@
+.root {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  height: 100dvh;
+}
+
+body {
+  background-image: radial-gradient(rgb(202, 202, 202), rgb(148, 177, 213));
+  background-repeat: no-repeat;
+}
+
+.drag-drop {
+  border-style: dashed;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: black;
+  margin: 0 auto;
+  width: 600px;
+  height: 150px;
+}
