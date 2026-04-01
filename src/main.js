@@ -1,24 +1,77 @@
 const convertButton = document.getElementById("convert-btn");
 const preview = document.getElementById("preview-image");
 const dragDrop = document.getElementById("dnd-input");
+const fileInput = document.getElementById("upload");
+const droparea = document.querySelector('.drop-area');
+
+const uploadedFiles = [];
+
+fileInput.addEventListener("change", () => {
+  uploadedFiles.length = 0; 
+  if (fileInput.files.length > 0) {
+    uploadedFiles.push(fileInput.files[0]);
+  }
+});
+
+console.log(uploadedFiles);
+
+const initApp = () => {
+    
+
+    const active = () => droparea.classList.add("green-border");
+
+    const inactive = () => droparea.classList.remove("green-border");
+
+    const prevents = (e) => e.preventDefault();
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evtName => {
+        droparea.addEventListener(evtName, prevents);
+    });
+
+    ['dragenter', 'dragover'].forEach(evtName => {
+        droparea.addEventListener(evtName, active);
+    });
+
+    ['dragleave', 'drop'].forEach(evtName => {
+        droparea.addEventListener(evtName, inactive);
+    });
+
+    droparea.addEventListener("drop", handleDrop);
+
+}
+
+document.addEventListener("DOMContentLoaded", initApp);
+
+const handleDrop = (e) => {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+
+    if (files.length > 0) {
+      uploadedFiles.push(files[0]);
+    }
+
+    convertImage(uploadedFiles);
+};
 
 function convertImage() {
-  const fileInput = document.getElementById("upload");
+  
   const format = document.getElementById("format").value;
 
-  if (!fileInput.files.length) {
+  if (!uploadedFiles.length) {
     alert("Please select an image");
     return;
   }
 
-  const file = fileInput.files[0];
+  const file = uploadedFiles[0];
 
   if (!file) {
     alert("Please select a file");
+    return;
   }
 
   if (!file.type.startsWith("image/")) {
     alert("Please upload a valid image file.");
+    return;
   }
 
   const reader = new FileReader();
@@ -55,7 +108,7 @@ function convertImage() {
       preview.width = canvas.width * .5;
       preview.style.display = "block";
 
-      dragDrop.style.display = "none";
+      droparea.style.display = "none";
 
     };
 
@@ -66,4 +119,4 @@ function convertImage() {
 
 }
 
-convertButton.addEventListener("click", convertImage)
+convertButton.addEventListener("click", convertImage);

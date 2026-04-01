@@ -8,16 +8,21 @@ html {
 }
 
 body {
-  background-image: radial-gradient(rgb(202, 202, 202), rgb(148, 177, 213));
+  background-image: radial-gradient(rgb(167, 139, 171), rgb(91, 53, 99));
   background-repeat: no-repeat;
+  color: white;
 }
 
-.drag-drop {
+.drop-area {
   border-style: dashed;
   border-radius: 10px;
   border-width: 2px;
-  border-color: black;
+  border-color: white;
   margin: 0 auto;
   width: 600px;
   height: 150px;
+}
+
+.green-border {
+  border-color: green;
 }
